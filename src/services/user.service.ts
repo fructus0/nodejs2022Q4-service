@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  ForbiddenException,
-  NotFoundException,
-} from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { UserEntity } from '../entities/user.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user-dto';
@@ -26,11 +22,14 @@ export class UserService {
   }
 
   createUser(createUserDto: CreateUserDto): UserEntity {
-    const user = new UserEntity(createUserDto.login, createUserDto.password);
+    const createdUser = new UserEntity(
+      createUserDto.login,
+      createUserDto.password,
+    );
 
-    this.users.push(user);
+    this.users.push(createdUser);
 
-    return user;
+    return createdUser;
   }
 
   updateUser(id: string, updateUserDto: UpdateUserDto): UserEntity {

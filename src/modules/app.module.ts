@@ -6,13 +6,16 @@ import { UserService } from '../services/user.service';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ValidationException } from '../exceptions/validation.exception';
 import { ValidationExceptionFilter } from '../filters/validation-exeptions.filter';
+import { ArtistController } from '../controllers/artist.controller';
+import { ArtistService } from '../services/artist.service';
 
 @Module({
   imports: [],
-  controllers: [AppController, UserController],
+  controllers: [AppController, UserController, ArtistController],
   providers: [
     AppService,
     UserService,
+    ArtistService,
     {
       provide: APP_FILTER,
       useClass: ValidationExceptionFilter,
