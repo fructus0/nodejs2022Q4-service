@@ -1,6 +1,5 @@
 import { IsUUID } from 'class-validator';
-
-const UUID_VERSION = 4;
+import { UUID_VERSION } from '../constants/common';
 
 export class IdParamsDto {
   @IsUUID(UUID_VERSION)

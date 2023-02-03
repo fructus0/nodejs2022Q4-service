@@ -8,14 +8,22 @@ import { ValidationException } from '../exceptions/validation.exception';
 import { ValidationExceptionFilter } from '../filters/validation-exeptions.filter';
 import { ArtistController } from '../controllers/artist.controller';
 import { ArtistService } from '../services/artist.service';
+import { TrackController } from '../controllers/track.controller';
+import { TrackService } from '../services/track.service';
 
 @Module({
   imports: [],
-  controllers: [AppController, UserController, ArtistController],
+  controllers: [
+    AppController,
+    UserController,
+    ArtistController,
+    TrackController,
+  ],
   providers: [
     AppService,
     UserService,
     ArtistService,
+    TrackService,
     {
       provide: APP_FILTER,
       useClass: ValidationExceptionFilter,

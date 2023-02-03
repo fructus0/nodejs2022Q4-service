@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export interface TrackAttributes {
   id: string;
   name: string;
@@ -8,10 +10,10 @@ export interface TrackAttributes {
 
 export class TrackEntity implements TrackAttributes {
   constructor(
-    public id: string,
     public name: string,
     public artistId: string | null,
     public albumId: string | null,
     public duration: number,
+    public id: string = uuidv4(),
   ) {}
 }
