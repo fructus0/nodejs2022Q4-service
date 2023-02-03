@@ -6,6 +6,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -29,7 +30,13 @@ export class UserController {
 
   @Get('user/:id')
   getUserById(@Param() params: IdParamsDto): UserEntity {
-    return this.userService.getUserById(params.id);
+    const user = this.userService.getUserById(params.id);
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    return user;
   }
 
   @Post('user')

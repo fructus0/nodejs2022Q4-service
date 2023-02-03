@@ -10,14 +10,8 @@ export class ArtistService {
     return this.artists;
   }
 
-  getArtistById(id: string): ArtistEntity {
-    const targetArtist = this.artists.find((artist) => artist.id === id);
-
-    if (!targetArtist) {
-      throw new NotFoundException();
-    }
-
-    return targetArtist;
+  getArtistById(id: string): ArtistEntity | undefined {
+    return this.artists.find((artist) => artist.id === id);
   }
 
   createArtist(createArtistDto: CreateArtistDto): ArtistEntity {
@@ -39,6 +33,20 @@ export class ArtistService {
     }
 
     targetArtist.updateInfo(updateArtistDto);
+
+    return targetArtist;
+  }
+
+  deleteArtist(id: string): ArtistEntity {
+    const targetArtist = this.artists.find((artist) => artist.id === id);
+
+    if (!targetArtist) {
+      throw new NotFoundException();
+    }
+
+    this.artists = this.artists.filter(
+      (artist) => artist.id !== targetArtist.id,
+    );
 
     return targetArtist;
   }

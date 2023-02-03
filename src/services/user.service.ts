@@ -11,14 +11,8 @@ export class UserService {
     return this.users;
   }
 
-  getUserById(id: string): UserEntity {
-    const user = this.users.find((user) => user.id === id);
-
-    if (!user) {
-      throw new NotFoundException();
-    }
-
-    return user;
+  getUserById(id: string): UserEntity | undefined {
+    return this.users.find((user) => user.id === id);
   }
 
   createUser(createUserDto: CreateUserDto): UserEntity {

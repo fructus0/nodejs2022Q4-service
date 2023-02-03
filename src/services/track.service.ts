@@ -12,13 +12,7 @@ export class TrackService {
   }
 
   getTrackById(id: string): TrackEntity {
-    const track = this.tracks.find((track) => track.id === id);
-
-    if (!track) {
-      throw new NotFoundException();
-    }
-
-    return track;
+    return this.tracks.find((track) => track.id === id);
   }
 
   createTrack(createTrackDto: CreateTrackDto): TrackEntity {
@@ -54,5 +48,19 @@ export class TrackService {
     this.tracks = this.tracks.filter((track) => track.id !== targetTrack.id);
 
     return targetTrack;
+  }
+
+  formatTracksAfterArtistDeletion(artistId: string): void {
+    this.tracks = this.tracks.map((track) => ({
+      ...track,
+      artistId: track.artistId === artistId ? null : track.artistId,
+    }));
+  }
+
+  formatTracksAfterAlbumDeletion(albumId: string): void {
+    this.tracks = this.tracks.map((track) => ({
+      ...track,
+      albumId: track.albumId === albumId ? null : track.albumId,
+    }));
   }
 }

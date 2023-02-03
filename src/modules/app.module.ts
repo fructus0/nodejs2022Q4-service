@@ -10,6 +10,8 @@ import { ArtistController } from '../controllers/artist.controller';
 import { ArtistService } from '../services/artist.service';
 import { TrackController } from '../controllers/track.controller';
 import { TrackService } from '../services/track.service';
+import { AlbumController } from '../controllers/album.controller';
+import { AlbumService } from '../services/album.service';
 
 @Module({
   imports: [],
@@ -18,12 +20,14 @@ import { TrackService } from '../services/track.service';
     UserController,
     ArtistController,
     TrackController,
+    AlbumController,
   ],
   providers: [
     AppService,
     UserService,
     ArtistService,
     TrackService,
+    AlbumService,
     {
       provide: APP_FILTER,
       useClass: ValidationExceptionFilter,
