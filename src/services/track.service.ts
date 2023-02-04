@@ -53,6 +53,7 @@ export class TrackService {
   formatTracksAfterArtistDeletion(artistId: string): void {
     this.tracks = this.tracks.map((track) => ({
       ...track,
+      updateInfo: track.updateInfo,
       artistId: track.artistId === artistId ? null : track.artistId,
     }));
   }
@@ -60,6 +61,7 @@ export class TrackService {
   formatTracksAfterAlbumDeletion(albumId: string): void {
     this.tracks = this.tracks.map((track) => ({
       ...track,
+      updateInfo: track.updateInfo,
       albumId: track.albumId === albumId ? null : track.albumId,
     }));
   }

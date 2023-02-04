@@ -12,6 +12,8 @@ import { TrackController } from '../controllers/track.controller';
 import { TrackService } from '../services/track.service';
 import { AlbumController } from '../controllers/album.controller';
 import { AlbumService } from '../services/album.service';
+import { FavoriteController } from '../controllers/favorite.controller';
+import { FavoriteService } from '../services/favorite.service';
 
 @Module({
   imports: [],
@@ -21,6 +23,7 @@ import { AlbumService } from '../services/album.service';
     ArtistController,
     TrackController,
     AlbumController,
+    FavoriteController,
   ],
   providers: [
     AppService,
@@ -28,6 +31,7 @@ import { AlbumService } from '../services/album.service';
     ArtistService,
     TrackService,
     AlbumService,
+    FavoriteService,
     {
       provide: APP_FILTER,
       useClass: ValidationExceptionFilter,

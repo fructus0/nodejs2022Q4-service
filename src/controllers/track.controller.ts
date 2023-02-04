@@ -22,6 +22,7 @@ import { UpdateTrackDto } from '../dto/update-track.dto';
 import { ExceptionMessages } from '../constants/exceptionMessages';
 import { ArtistService } from '../services/artist.service';
 import { AlbumService } from '../services/album.service';
+import { FavoriteService } from '../services/favorite.service';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller()
@@ -30,6 +31,7 @@ export class TrackController {
     private readonly trackService: TrackService,
     private readonly artistService: ArtistService,
     private readonly albumService: AlbumService,
+    private readonly favoriteService: FavoriteService,
   ) {}
 
   @Get('track')
@@ -95,7 +97,13 @@ export class TrackController {
   @Delete('track/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   deleteTrack(@Param() params: IdParamsDto): Record<string, never> {
-    this.trackService.deleteTrack(params.id);
+    const deletedTrack = this.trackService.deleteTrack(params.id);
+
+    const { tracks } = this.favoriteService.getFavorites();
+
+    if (tracks.includes(deletedTrack.id)) {
+      this.favoriteService.deleteTrack(deletedTrack.id);
+    }
 
     return {};
   }

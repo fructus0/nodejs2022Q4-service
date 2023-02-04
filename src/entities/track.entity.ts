@@ -16,4 +16,8 @@ export class TrackEntity implements TrackAttributes {
     public duration: number,
     public id: string = uuidv4(),
   ) {}
+
+  updateInfo(partial: Omit<Partial<TrackAttributes>, 'id'>) {
+    Object.assign(this, partial);
+  }
 }

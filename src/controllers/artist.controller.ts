@@ -20,6 +20,7 @@ import { CreateArtistDto } from '../dto/create-artist.dto';
 import { UpdateArtistDto } from '../dto/update-artist.dto';
 import { TrackService } from '../services/track.service';
 import { AlbumService } from '../services/album.service';
+import { FavoriteService } from '../services/favorite.service';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller()
@@ -28,6 +29,7 @@ export class ArtistController {
     private readonly artistService: ArtistService,
     private readonly trackService: TrackService,
     private readonly albumService: AlbumService,
+    private readonly favoriteService: FavoriteService,
   ) {}
 
   @Get('artist')
@@ -66,6 +68,12 @@ export class ArtistController {
 
     this.trackService.formatTracksAfterArtistDeletion(deletedArtist.id);
     this.albumService.formatAlbumsAfterArtistDeletion(deletedArtist.id);
+
+    const { artists } = this.favoriteService.getFavorites();
+
+    if (artists.includes(deletedArtist.id)) {
+      this.favoriteService.deleteArtist(deletedArtist.id);
+    }
 
     return {};
   }

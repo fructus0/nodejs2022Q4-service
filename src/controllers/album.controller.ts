@@ -22,6 +22,7 @@ import { AlbumEntity } from '../entities/album.entity';
 import { ArtistService } from '../services/artist.service';
 import { ExceptionMessages } from '../constants/exceptionMessages';
 import { TrackService } from '../services/track.service';
+import { FavoriteService } from '../services/favorite.service';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller()
@@ -29,6 +30,7 @@ export class AlbumController {
   constructor(
     private readonly albumService: AlbumService,
     private readonly artistService: ArtistService,
+    private readonly favoriteService: FavoriteService,
     private readonly trackService: TrackService,
   ) {}
 
@@ -83,6 +85,12 @@ export class AlbumController {
     const deletedAlbum = this.albumService.deleteAlbum(params.id);
 
     this.trackService.formatTracksAfterAlbumDeletion(deletedAlbum.id);
+
+    const { albums } = this.favoriteService.getFavorites();
+
+    if (albums.includes(deletedAlbum.id)) {
+      this.favoriteService.deleteAlbum(deletedAlbum.id);
+    }
 
     return {};
   }
