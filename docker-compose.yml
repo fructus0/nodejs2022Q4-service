@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
     node:
+      image: aleksey0danilchenko/nodejs2022q4-service-node
       build:
         context: ./
         dockerfile: ./docker/node/Dockerfile
@@ -20,19 +21,30 @@ services:
         - .:/usr/src/app:rw,cached
         - ./docker/node/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint
       restart: on-failure
+      networks:
+        - database
+      depends_on:
+        - database
 
     database:
+      image: aleksey0danilchenko/nodejs2022q4-service-database
       build:
         context: ./
         dockerfile: docker/database/Dockerfile
       environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=${DB_NAME}
+        - POSTGRES_USER=${DB_USER}
+        - POSTGRES_PASSWORD=${DB_PASSWORD}
       ports:
-        - '5432:5432'
+        - ${DB_PORT}:${DB_PORT}
       volumes:
         - db-data:/var/lib/postgresql/data
       restart: on-failure
+      networks:
+        - database
 
 volumes:
   db-data:
+
+networks:
+  database:
